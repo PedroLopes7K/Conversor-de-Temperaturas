@@ -25,8 +25,49 @@ const TemperatureConverter = () => {
     setTemperatura(temperatura)
   }
 
-  function converter() {
-    alert('ok')
+  const converter = () => {
+    let temp = Number(temperatura)
+
+    const respC = document.getElementById('celsius-temp')
+    const respF = document.getElementById('fahrenheit-temp')
+    const respK = document.getElementById('kelvin-temp')
+
+    const formTemp =
+      document.getElementById('user-choice').options[
+        document.getElementById('user-choice').selectedIndex
+      ].value
+    // console.log(formTemp)
+
+    if (formTemp === 'C') {
+      const temperaturaCelsius = Number(temp.toFixed(2))
+      const temperaturaFahrenheit = Number(
+        ((temperaturaCelsius * 9) / 5 + 32).toFixed(2)
+      )
+      const temperaturaKelvin = Number((temp + 273.15).toFixed(2))
+      respC.innerText = temperaturaCelsius
+      respF.innerText = temperaturaFahrenheit
+      respK.innerText = temperaturaKelvin
+    } else if (formTemp === 'F') {
+      const temperaturaFahrenheit = Number(temp.toFixed(2))
+      const temperaturaCelsius = Number(
+        ((temperaturaFahrenheit - 32) * (5 / 9)).toFixed(2)
+      )
+      const temperaturaKelvin = Number(
+        ((temperaturaFahrenheit - 32) * (5 / 9) + 273.15).toFixed(2)
+      )
+      respC.innerText = temperaturaCelsius
+      respF.innerText = temperaturaFahrenheit
+      respK.innerText = temperaturaKelvin
+    } else {
+      const temperaturaKelvin = Number(temp.toFixed(2))
+      const temperaturaCelsius = Number(temperaturaKelvin - 273.15).toFixed(2)
+      const temperaturaFahrenheit = Number(
+        (temperaturaKelvin - 273.17) * (9 / 5) + 32
+      ).toFixed(2)
+      respC.innerText = temperaturaCelsius
+      respF.innerText = temperaturaFahrenheit
+      respK.innerText = temperaturaKelvin
+    }
   }
   return (
     <>
