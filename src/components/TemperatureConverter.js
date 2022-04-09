@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 
 const TemperatureConverter = () => {
   let [temperatura, setTemperatura] = useState('')
+  const seletcs = document.getElementById('user-choice')
+  const teclas = document.querySelectorAll('button.tecla')
+  const results = document.querySelectorAll('.result')
 
   function inserirTempertura(valor) {
     if (valor === '.' && temperatura.includes('.')) {
@@ -25,18 +28,36 @@ const TemperatureConverter = () => {
     setTemperatura(temperatura)
   }
 
+  function resetar() {
+    setTemperatura('')
+    for (let result of results) {
+      result.innerText = ''
+    }
+    seletcs.removeAttribute('disabled')
+    for (let tecla of teclas) {
+      tecla.removeAttribute('disabled')
+    }
+  }
+
   const converter = () => {
     let temp = Number(temperatura)
-
     const respC = document.getElementById('celsius-temp')
     const respF = document.getElementById('fahrenheit-temp')
     const respK = document.getElementById('kelvin-temp')
+
+    seletcs.setAttribute('disabled', true)
+    for (let tecla of teclas) {
+      tecla.setAttribute('disabled', true)
+    }
 
     const formTemp =
       document.getElementById('user-choice').options[
         document.getElementById('user-choice').selectedIndex
       ].value
     // console.log(formTemp)
+    if (temperatura === '-0') {
+      setTemperatura('0')
+    }
 
     if (formTemp === 'C') {
       const temperaturaCelsius = Number(temp.toFixed(2))
@@ -144,7 +165,9 @@ const TemperatureConverter = () => {
         >
           -
         </button>
-        <div className="reset tecla">Nova conversão</div>
+        <div className="reset tecla" onClick={resetar}>
+          Nova conversão
+        </div>
       </aside>
     </>
   )
